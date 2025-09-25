@@ -1,7 +1,7 @@
 import type { Product } from "./types.mts";
 import { setLocalStorage, getParam } from "./utils.mts";
 import { findProductById } from "./productData.mts";
-import { addProductToCart } from "./productDetails.mts";
+import { addProductToCart, productDetails } from "./productDetails.mts";
 
 
 // add to cart button event handler
@@ -19,4 +19,9 @@ document
   ?.addEventListener("click", addToCartHandler);
 
 const ProductId = getParam('product');
-console.log(ProductId);
+if (!ProductId) {
+  // replace with 404 in the future?
+  window.location.href = '/';
+} else {
+  productDetails(ProductId, '.product-detail');
+}
