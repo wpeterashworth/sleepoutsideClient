@@ -1,0 +1,9 @@
+[
+    {
+        "message": "Hello Alert",
+        "color": "red",
+        "backgroundColor": "lightcoral",
+        "duration": 3000,
+        "removeable": true
+    }
+]
