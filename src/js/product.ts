@@ -1,9 +1,7 @@
-import type { Product } from "./types.mts";
-import { setLocalStorage, getParam } from "./utils.mts";
-import { findProductById } from "./productData.mts";
+import * as utils from "./utils.mts";
 import { productDetails } from "./productDetails.mts";
 
-const ProductId = getParam('product');
+const ProductId = utils.getParam('product');
 if (!ProductId) {
   // replace with 404 in the future?
   window.location.href = '/';
