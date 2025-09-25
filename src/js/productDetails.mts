@@ -2,6 +2,8 @@ import { setLocalStorage } from "./utils.mts";
 import type { Product } from "./types.mts";
 import { Url } from "url";
 
+let PRODUCT:Product;
+
 export async function productDetails(productId:string, selector:string) {
   // get the product from the JSON file
   // call productDetailsTemplate
@@ -15,9 +17,8 @@ export async function productDetails(productId:string, selector:string) {
   } catch(error) {
     console.error(error);
   }
-  console.log('tentData:', tentData);
-  const product = tentData.find((tent: Product) => tent.id === productId);
-  if (!product) {
+  PRODUCT = tentData.find((tent: Product) => tent.id === productId);
+  if (!PRODUCT) {
     throw new Error(`Product ID: ${productId} not found`)
   }
   const element = document.querySelector(selector)
@@ -26,11 +27,17 @@ export async function productDetails(productId:string, selector:string) {
   }
 
   
-  document.querySelector(selector)!.innerHTML = productDetailsTemplate(product);
-}
+  document.querySelector(selector)!.innerHTML = productDetailsTemplate(PRODUCT);
 
-export function addProductToCart(product:Product) {
-  setLocalStorage("so-cart", product);
+  // add listener to Add to Cart button
+  console.log(document.getElementById('addToCart'));
+  
+  document
+    .getElementById('addToCart')
+    ?.addEventListener('click', () => {
+      setLocalStorage('so-cart', PRODUCT);
+      location.href = '/cart/';
+    });
 }
 
 function productDetailsTemplate(product:Product) {
@@ -41,6 +48,6 @@ function productDetailsTemplate(product:Product) {
     <p class="product__color" id="productColorName">${product.colors.map( c => c.colorName ).join('/')}</p>
     <p class="product__description" id="productDescriptionHtmlSimple">${product.descriptionHtmlSimple}</p>
     <div class="product-detail__add">
-      <button id="addToCart" data-id="${product.id}">Add to Cart</button>
+      <button id="addToCart">Add to Cart</button>
     </div>`;
 }
