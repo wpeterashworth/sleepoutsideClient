@@ -1,24 +1,24 @@
 export interface Color {
-  ColorCode: string;
-  ColorName: string;
+  colorCode: string;
+  colorName: string;
 }
 
 export interface Brand {
-  Id: string;
-  LogoSrc: string;
-  Name: string;
+  id: string;
+  logoSrc: string;
+  name: string;
 }
 
 export interface Product {
-  Id: string;
-  NameWithoutBrand: string;
-  Name: string;
-  Image: string;
-  SizesAvailable: Record<string, unknown>; 
-  Colors: Color[];
-  DescriptionHtmlSimple: string;
-  SuggestedRetailPrice: number;
-  Brand: Brand;
-  ListPrice: number;
-  FinalPrice: number;
+  id: string;
+  nameWithoutBrand: string;
+  name: string;
+  image: string;
+  sizesAvailable: Record<string, unknown>; 
+  colors: Color[];
+  descriptionHtmlSimple: string;
+  suggestedRetailPrice: number;
+  brand: Brand;
+  listPrice: number;
+  finalPrice: number;
 }
