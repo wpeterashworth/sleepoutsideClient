@@ -1,0 +1,55 @@
+Users:
+    _id:
+        string,
+        required
+        
+    firstName:
+        string,
+        required,
+        description: "Users first name"
+
+    lastName:
+        string,
+        required,
+        description: "Users last name"
+
+    email:
+        string,
+        unique,
+        required,
+        description: "User email"
+
+    password:
+        string,
+        required,
+        description: "User Password"
+
+    cart:
+        product: {
+            image:
+                url,
+                required,
+            name:
+                string,
+                required
+            quantity:
+                int,
+                required
+            price:
+                int,
+                required
+            brand:
+        }
+        Array,
+        required,
+        description: "Array of productIds in the user's cart"
+
+    wishlist:
+        Array,
+        required,
+        description: "Array of productIds in the user's wishlist"
+
+    Auth_ID:
+        string,
+        unique,
+        description: "Result from auth login"

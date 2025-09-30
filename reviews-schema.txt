@@ -1,0 +1,31 @@
+Review:
+    _id:
+        string,
+        required
+    
+    productId:
+        required,
+        string,
+        description: "id of the product being reviewed"
+        
+    userId:
+        required
+
+    rating: 
+        required,
+        number
+    title:
+        required,
+        string,
+        description: "title of the review"
+    body: 
+        string
+        description: "User's oppinions on the product"
+    date:
+        required,
+        number
+
+
+
+
+review
