@@ -10,6 +10,7 @@ function renderCartContents() {
 
 function cartItemTemplate(item: Product) {
   const newItem = `<li class="cart-card divider">
+  <button class="cart-card__remove" type="button" title="Remove item" data-id="${item.id}">X</button>
   <a href="/product_pages/index.html?product=${item.id}" class="cart-card__image">
     <img
       src="${item.image}"
@@ -28,3 +29,17 @@ function cartItemTemplate(item: Product) {
 }
 
 renderCartContents();
+
+
+document.addEventListener("click", (event) => {
+  const target = event.target as HTMLElement | null;
+  if (!target) return;
+  if (target.classList.contains("cart-card__remove")) {
+    const id = target.getAttribute("data-id");
+    if (!id) return;
+    const items = utils.getCartItems();
+    const updated = items.filter((p: Product) => p.id !== id);
+    utils.setLocalStorage("so-cart", updated);
+    renderCartContents();
+  }
+});
