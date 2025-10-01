@@ -17,7 +17,10 @@ export async function productDetails(productId:string, selector:string) {
   // add listener to Add to Cart button
   utils.setClick('#addToCart', () => {
     utils.addItemToCart(product);
-    location.href = '/cart/';
+    // allow cart bounce animation to play before navigating
+    setTimeout(() => {
+      location.href = '/cart/';
+    }, 600);
   });
 }
 
