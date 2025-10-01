@@ -54,6 +54,16 @@ export function addItemToCart(product: Product) {
   const cartItems = getLocalStorage("so-cart") || [];
   cartItems.push(product);
   setLocalStorage("so-cart", cartItems);
+  // trigger cart bounce animation
+  const cartEl = document.querySelector('.cart');
+  if (cartEl) {
+    cartEl.classList.remove('bounce');
+    // force reflow to allow re-triggering animation
+    void (cartEl as HTMLElement).offsetWidth;
+    cartEl.classList.add('bounce');
+    // remove class after animation ends (0.5s)
+    setTimeout(() => cartEl.classList.remove('bounce'), 600);
+  }
 }
 export function getCartItems() {
   const cartItems = getLocalStorage("so-cart") || [];
