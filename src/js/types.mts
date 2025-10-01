@@ -8,12 +8,18 @@ export interface Brand {
   logoSrc: string;
   name: string;
 }
+export interface Images {
+  primarySmall: string;
+  primaryMedium: string;
+  primaryLarge: string;
+  primaryExtraLarge: string;
+}
 
 export interface Product {
   id: string;
   nameWithoutBrand: string;
   name: string;
-  image: string;
+  images: Images;
   sizesAvailable: Record<string, unknown>; 
   colors: Color[];
   descriptionHtmlSimple: string;
