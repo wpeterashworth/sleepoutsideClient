@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/user.json",
+  "title": "User",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "User's first name"
+    },
+    "lastName": {
+      "type": "string",
+      "description": "User's last name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User email (unique)"
+    },
+    "password": {
+      "type": "string",
+      "description": "User password"
+    },
+    "cart": {
+      "type": "array",
+      "description": "Array of productIds in the user's cart",
+      "items": {
+        "type": "object",
+        "properties": {
+          "image": { "type": "string", "format": "uri" },
+          "name": { "type": "string" },
+          "quantity": { "type": "integer", "minimum": 1 },
+          "price": { "type": "integer", "minimum": 0 },
+          "brand": { "type": "string" }
+        },
+        "required": ["image", "name", "quantity", "price"]
+      }
+    },
+    "wishlist": {
+      "type": "array",
+      "description": "Array of productIds in the user's wishlist",
+      "items": { "type": "string" }
+    },
+    "Auth_ID": {
+      "type": "string",
+      "description": "Result from auth login (unique)"
+    }
+  },
+  "required": [
+    "_id",
+    "firstName",
+    "lastName",
+    "email",
+    "password",
+    "cart",
+    "wishlist"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/review.json",
+  "title": "Review",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "type": "string"
+    },
+    "productId": {
+      "type": "string",
+      "description": "id of the product being reviewed"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "title": {
+      "type": "string",
+      "description": "title of the review"
+    },
+    "body": {
+      "type": "string",
+      "description": "User's opinions on the product"
+    },
+    "date": {
+      "type": "number",
+      "description": "Unix timestamp of when the review was created"
+    }
+  },
+  "required": ["_id", "productId", "userId", "rating", "title", "date"]
+}
