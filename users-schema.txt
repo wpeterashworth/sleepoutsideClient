@@ -26,19 +26,38 @@ Users:
 
     cart:
         product: {
+            link:
+                string,
+                required,
+                description: "link back to product"
             image:
                 url,
                 required,
+                description: "link to image"
             name:
                 string,
-                required
+                required,
+                description: "name of the product"
             quantity:
                 int,
-                required
+                required,
+                description: "number of products of this type"
             price:
                 int,
-                required
+                required,
+                description: "total price"
             brand:
+                string,
+                required,
+                description: "brand name"
+            size:
+                string,
+                required,
+                description: "name of size seected"
+            color:
+                string,
+                required,
+                description: "name of color seected"
         }
         Array,
         required,

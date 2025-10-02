@@ -24,8 +24,3 @@ Review:
     date:
         required,
         number
-
-
-
-
-review
