@@ -13,7 +13,7 @@ function cartItemTemplate(item: Product) {
   <button class="cart-card__remove" type="button" title="Remove item" data-id="${item.id}">X</button>
   <a href="/product_pages/index.html?product=${item.id}" class="cart-card__image">
     <img
-      src="${item.image}"
+      src="${item.images}"
       alt="${item.name}"
     />
   </a>
