@@ -6,6 +6,20 @@ function renderCartContents() {
   const htmlItems = cartItems.map((item: Product) => cartItemTemplate(item));
   const listEl = utils.qs(".product-list");
   if (listEl) listEl.innerHTML = htmlItems.join("");
+
+  // update cart total footer visibility and value
+  const footerEl = utils.qs('.cart-footer') as HTMLElement | null;
+  const totalEl = utils.qs('.cart-total') as HTMLElement | null;
+  if (footerEl && totalEl) {
+    if (cartItems.length > 0) {
+      footerEl.classList.remove('hide');
+      const total = cartItems.reduce((sum: number, p: Product) => sum + (p.finalPrice || 0), 0);
+      totalEl.textContent = `Total: $${total.toFixed(2)}`;
+    } else {
+      footerEl.classList.add('hide');
+      totalEl.textContent = 'Total: ';
+    }
+  }
 }
 
 function cartItemTemplate(item: Product) {
@@ -13,7 +27,7 @@ function cartItemTemplate(item: Product) {
   <button class="cart-card__remove" type="button" title="Remove item" data-id="${item.id}">X</button>
   <a href="/product_pages/index.html?product=${item.id}" class="cart-card__image">
     <img
-      src="${item.images}"
+      src="${item.images.primarySmall}"
       alt="${item.name}"
     />
   </a>
