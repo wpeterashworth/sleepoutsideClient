@@ -327,15 +327,3 @@ footer {
   top: 0.25em;
   right: 0.25em;
 }
-
-/* Cart footer */
-.hide { display: none; }
-.cart-footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1em;
-}
-.cart-total {
-  font-weight: bold;
-  font-size: 1.1em;
-}
