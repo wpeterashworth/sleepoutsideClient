@@ -1,9 +1,11 @@
-import { openUserMenu } from "./utils.mts";
-import Alert from "./alert.mts"; Alert.init();
+import { mount } from "svelte";
+import UserMenu from './components/UserMenu.svelte';
 
-// new Alert({
-//     message: 'Hello World',
-//     duration: 1000
-// })
-
-openUserMenu(".user__button");
+// get the element we want to put the component in
+const menuEl = document.querySelector('.user-menu-container');
+// check to make sure it exists
+if(menuEl) {
+    mount(UserMenu, {
+        target: menuEl
+    });
+}

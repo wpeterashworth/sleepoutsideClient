@@ -18,6 +18,7 @@ export function openUserMenu(selector:string) {
 <div class="user-menu-container">
     <div class="user">
     <button
+        onclick={openUserMenu}
         class="user__button"
         aria-label="user management"
         title="User Management"
