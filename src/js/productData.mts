@@ -9,14 +9,14 @@ function convertToJson(res:Response) {
   }
 }
 
-export function getData(url:string) {
+export function getProducts(url:string) {
   return fetch(baseURL + url)
     .then(convertToJson)
     .then((data) => data);
 }
 
 export async function findProductById(id:string) {
-  const product = await getData('products/' + id) as Product;
+  const product = await getProducts('products/' + id) as Product;
   console.log(product);
   return product;
 }
