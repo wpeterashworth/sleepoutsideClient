@@ -1,35 +1,22 @@
 <script lang="ts">
-  import { setClick } from "../utils.mts";
-  import Dialog from './Dialog.svelte';
-  import Login from './Login.svelte';
-
-  function openUserMenu(e: Event) {
-    e.stopPropagation();
-    const menuElement = document.querySelector(".user__menu");
-    menuElement?.classList.toggle("open");
+  import { getProducts } from "../productData.mts";
+  import ProductSummary from "./ProductSummary.svelte";
+  const { category } = $props();
+  
+  async function loadProducts() {
+    return await getProducts(`products?category=${category}`);
   }
 
-  // Close any open menus when clicking outside
-  setClick("body", () => {
-    const openMenus = document.querySelectorAll(".open");
-    openMenus.forEach((el) => {
-      el?.classList.remove("open");
-    });
-  });
+  let serverResponse = $state(loadProducts());
 </script>
 
-<div class="user">
-  <button
-    onclick={openUserMenu}
-    class="user__button"
-    aria-label="user management"
-    title="User Management"
-  >
-    <img src="/images/noun-hiker.svg" alt="user icon" />
-  </button>
-  <nav class="user__menu">
-    <Dialog label="Login"><Login /></Dialog>
-    <a href="/profile">Profile</a>
-    <a href="/orders">Orders</a>
-  </nav>
-</div>
+<h2>Top Products: {category}</h2>
+{#await serverResponse}
+<p>Loading...</p>
+{:then serverResponse}
+  <ul class="product-list">
+    {#each serverResponse.results as product}
+      <ProductSummary product={product} />
+    {/each}
+  </ul>
+{/await}
