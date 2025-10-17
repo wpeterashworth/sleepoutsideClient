@@ -5,14 +5,17 @@ function convertToJson(res:Response) {
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("Bad Response");
+    if (res.status === 404)
+      throw new Error('Product not found');
+    else if (res.status === 500)
+      throw new Error('There\'s been a server error. Sorry! Please try again later.');
+    throw new Error(res.statusText);
   }
 }
 
 export function getProducts(url:string) {
   return fetch(baseURL + url)
-    .then(convertToJson)
-    .then((data) => data);
+    .then(convertToJson);
 }
 
 export async function findProductById(id:string) {
