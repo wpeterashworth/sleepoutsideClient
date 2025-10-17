@@ -4,7 +4,11 @@
   const { category } = $props();
   
   async function loadProducts() {
-    return await getProducts(`products?category=${category}`);
+    try {
+      return await getProducts(`products?category=${category}`);
+    } catch (error) {
+      throw `<p>There was an error loading products.</p><p>Click <a href="/">here</a> to go back to the homepage.</p>`;
+    }
   }
 
   let serverResponse = $state(loadProducts());
@@ -19,4 +23,6 @@
       <ProductSummary product={product} />
     {/each}
   </ul>
+{:catch error}
+  <p>{@html error}</p>
 {/await}

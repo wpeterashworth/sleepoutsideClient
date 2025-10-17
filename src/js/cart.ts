@@ -1,5 +1,8 @@
 import * as utils from "./utils.mts";
 import type { Product } from "./types.mts";
+import UserMenu from "./components/UserMenu.svelte";
+
+utils.mountSvelte(UserMenu, ".user-menu-container");
 
 function renderCartContents() {
   const cartItems = utils.getCartItems();
@@ -13,7 +16,7 @@ function cartItemTemplate(item: Product) {
   <button class="cart-card__remove" type="button" title="Remove item" data-id="${item.id}">X</button>
   <a href="/product_pages/index.html?product=${item.id}" class="cart-card__image">
     <img
-      src="${item.images}"
+      src="${item.images.primarySmall}"
       alt="${item.name}"
     />
   </a>

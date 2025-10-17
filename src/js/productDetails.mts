@@ -3,11 +3,16 @@ import { findProductById } from "./productData.mts";
 import type { Product } from "./types.mts";
 
 export async function productDetails(productId:string, selector:string) {
-  let product = await findProductById(productId);
-  if (!product) {
-    // replace with 404 in the future?
-    alert('Product not found');
-    window.location.href = '/';
+  let product:Product;
+  try {
+    product = await findProductById(productId);
+  } catch (error) {
+    utils.qs(selector)!.innerHTML = `
+      <center>
+        <h3>${error}</h3>
+        <p>Click <a href="/">here</a> to go back to the homepage.</p>
+      <center>
+    `;
     return;
   }
 

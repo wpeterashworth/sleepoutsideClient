@@ -1,4 +1,6 @@
 import { Product } from "./types.mts";
+import { mount } from "svelte";
+
 // wrapper for querySelector...returns matching element
 export const qs = (selector:string, parent = document) => parent.querySelector(selector);
 export const qsa = (selector:string, parent = document) => parent.querySelectorAll(selector);
@@ -68,4 +70,15 @@ export function addItemToCart(product: Product) {
 export function getCartItems() {
   const cartItems = getLocalStorage("so-cart") || [];
   return cartItems;
+}
+
+export function mountSvelte(svelteComponent: any, targetSelector: string, props?: any) {
+  const target = qs(targetSelector);
+  if (!target) return console.log(`Svelte target not found: "${targetSelector}"`);
+
+  const options = {
+    target,
+    props
+  };
+  mount(svelteComponent, options);
 }
