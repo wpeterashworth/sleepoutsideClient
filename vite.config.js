@@ -1,7 +1,10 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+
 
 export default defineConfig({
+  plugins: [svelte()],
   root: "src/",
 
   build: {
@@ -12,7 +15,7 @@ export default defineConfig({
         cart: resolve('src/cart/index.html'),
         checkout: resolve('src/checkout/index.html'),
         product1: resolve('src/product_pages/index.html'),
-        
+        productList: resolve('src/product-list/index.html'),
       },
     },
   },
