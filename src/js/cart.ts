@@ -7,6 +7,7 @@ utils.mountSvelte(UserMenu, ".user-menu-container");
 utils.mountSvelte(Cart, ".cart-parent", 
   {
     cartItems: utils.getCartItems(),
-    removeItem: (product: Product) => utils.removeItemFromCart(product)
+    removeItem: (product: Product) => utils.removeItemFromCart(product),
+    addItem: (product: Product) => utils.addItemToCart(product, false)
   }
 );

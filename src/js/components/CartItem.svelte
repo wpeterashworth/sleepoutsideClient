@@ -1,14 +1,17 @@
 <script>
-  const { item, removeItem } = $props();
+  const { item, removeItem, addItem } = $props();
 
   let quantity = $state(item.quantity);
 
-  function add() { quantity += 1 }
+  function add() {
+    quantity += 1;
+    item.quantity = quantity;
+    addItem(item);
+  }
   function subtract() {
-    quantity -= 1
-    if (quantity < 1) {
-      removeItem(item);
-    }
+    quantity -= 1;
+    item.quantity = quantity;
+    removeItem(item);
   }
 </script>
 <style>

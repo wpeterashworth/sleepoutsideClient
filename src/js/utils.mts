@@ -52,7 +52,7 @@ export function getParam(param:string) {
   return value;
 }
 
-export function addItemToCart(product: Product) {
+export function addItemToCart(product: Product, doAnimation = true) {
   const cartItems = getLocalStorage("so-cart") || [];
 
   // if item already exists in cart, update quantity
@@ -67,6 +67,11 @@ export function addItemToCart(product: Product) {
   setLocalStorage("so-cart", cartItems);
   
   // trigger cart bounce animation
+  if (doAnimation) {
+    cartAnimation();
+  }
+}
+function cartAnimation() {
   const cartEl = document.querySelector('.cart');
   if (cartEl) {
     cartEl.classList.remove('bounce');
