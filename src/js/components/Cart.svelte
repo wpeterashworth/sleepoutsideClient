@@ -1,11 +1,11 @@
 <script>
     import CartItem from "./CartItem.svelte";
 
-    const { cartItems } = $props();
+    const { cartItems, removeItem } = $props();
 </script>
 
 <ul>
     {#each cartItems as item}
-        <CartItem item={item} />
+        <CartItem item={item} removeItem={removeItem} />
     {/each}
 </ul>
