@@ -7,8 +7,12 @@ export const qsa = (selector:string, parent = document) => parent.querySelectorA
 
 // retrieve data from localstorage
 export function getLocalStorage(key:string) {
+  const item = localStorage.getItem(key)
+  if (!item) {
+  return null;
+  }
   try {
-    return JSON.parse(localStorage.getItem(key) || "");
+    return JSON.parse(item)
   } catch (error) {
     return null;
   }
