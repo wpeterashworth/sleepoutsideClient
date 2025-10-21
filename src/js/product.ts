@@ -1,8 +1,11 @@
 import * as utils from "./utils.mts";
 import { productDetails } from "./productDetails.mts";
+import Header from './components/Header.svelte';
+import Footer from './components/Footer.svelte';
+import { mountSvelte } from './utils.mts';
 
-import UserMenu from './components/UserMenu.svelte';
-utils.mountSvelte(UserMenu, ".user-menu-container");
+mountSvelte(Header, '#header');
+mountSvelte(Footer, '#footer');
 
 const ProductId = utils.getParam('product');
 if (!ProductId) {

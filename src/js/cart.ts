@@ -1,8 +1,11 @@
 import * as utils from "./utils.mts";
 import type { Product } from "./types.mts";
-import UserMenu from "./components/UserMenu.svelte";
+import Header from './components/Header.svelte';
+import Footer from './components/Footer.svelte';
+import { mountSvelte } from './utils.mts';
 
-utils.mountSvelte(UserMenu, ".user-menu-container");
+mountSvelte(Header, '#header');
+mountSvelte(Footer, '#footer');
 
 function renderCartContents() {
   const cartItems = utils.getCartItems();
