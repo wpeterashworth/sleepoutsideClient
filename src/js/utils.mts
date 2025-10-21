@@ -7,8 +7,12 @@ export const qsa = (selector:string, parent = document) => parent.querySelectorA
 
 // retrieve data from localstorage
 export function getLocalStorage(key:string) {
+  const item = localStorage.getItem(key)
+  if (!item) {
+  return null;
+  }
   try {
-    return JSON.parse(localStorage.getItem(key) || "");
+    return JSON.parse(item)
   } catch (error) {
     return null;
   }
@@ -52,11 +56,26 @@ export function getParam(param:string) {
   return value;
 }
 
-export function addItemToCart(product: Product) {
+export function addItemToCart(product: Product, doAnimation = true) {
   const cartItems = getLocalStorage("so-cart") || [];
-  cartItems.push(product);
+
+  // if item already exists in cart, update quantity
+  const existingItem = cartItems.find((item: Product) => item.id === product.id);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    // if item doesn't exist in cart, add it
+    product.quantity = 1;
+    cartItems.push(product);
+  }
   setLocalStorage("so-cart", cartItems);
+  
   // trigger cart bounce animation
+  if (doAnimation) {
+    cartAnimation();
+  }
+}
+function cartAnimation() {
   const cartEl = document.querySelector('.cart');
   if (cartEl) {
     cartEl.classList.remove('bounce');
@@ -66,6 +85,20 @@ export function addItemToCart(product: Product) {
     // remove class after animation ends (0.5s)
     setTimeout(() => cartEl.classList.remove('bounce'), 600);
   }
+}
+
+export function removeItemFromCart(product: Product) {
+  let cartItems = getLocalStorage("so-cart") || [];
+  const thisItem = cartItems.find((item: Product) => item.id === product.id);
+  if (!thisItem) return;
+  if (thisItem.quantity > 1) {
+    // if item quantity is greater than 1, reduce quantity
+    thisItem.quantity -= 1;
+  } else {
+    // if item quantity is 1, remove item
+    cartItems = cartItems.filter((item: Product) => item.id !== product.id);
+  }
+  setLocalStorage("so-cart", cartItems);
 }
 export function getCartItems() {
   const cartItems = getLocalStorage("so-cart") || [];
