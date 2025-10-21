@@ -5,7 +5,7 @@ import UserMenu from "./UserMenu.svelte";
 
 <header class="divider">
     <div class="logo">
-    <img src="./images/noun_Tent_2517.svg" alt="tent image for logo" />
+    <img src="./images/noun_Tent_2517.svg" alt="tent logo" />
     <a href="/"> Sleep<span class="highlight">Outside</span></a>
     </div>
     <nav class="menu-right">
