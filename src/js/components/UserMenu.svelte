@@ -2,7 +2,8 @@
   import { setClick } from "../utils.mts";
   import Dialog from './Dialog.svelte';
   import Login from './Login.svelte';
-  import { userStore } from "../auth.svelte.ts";
+  import { userStore, logout, checkAuth, isProtectedRoute } from "../auth.svelte.ts";
+  checkAuth();
 
   function openUserMenu(e: Event) {
     e.stopPropagation();
@@ -34,14 +35,12 @@
     </button>
     <nav class="user__menu">
       {#if userStore.isLoggedIn}
-        <button>Logout</button>
-        <a href="/profile">Profile</a>
-        <a href="/orders">Orders</a>
+        <a href="javscript:void(0)" onclick={logout}>Logout</a>
       {:else}
-        <Dialog label="Login"><Login /></Dialog>
-        <a href="/profile">Profile</a>
-        <a href="/orders">Orders</a>
+        <Dialog label="Login" required={isProtectedRoute()}><Login /></Dialog>
       {/if}
+      <a href="/profile/">Profile</a>
+      <a href="/orders/">Orders</a>
     </nav>
   </div>
 

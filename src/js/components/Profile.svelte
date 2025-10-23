@@ -1,6 +1,7 @@
 <script lang="ts">
   import { checkAuth, userStore, logout } from "../auth.svelte";
   import { onMount } from "svelte";
+    import Alert from "./Alert.svelte";
   const baseURL = import.meta.env.VITE_SERVER_URL;
   let profile = $state("");
 
@@ -22,8 +23,6 @@
   // the effect rune should run when there are changes to a state rune that is used inside of it.
   // @ts-ignore
   $effect(async () => {
-    console.log("effect ran");
-    // if a change is happens to userStore.isLoggedIn, the effect will run again. If it is true it will get the profile
     if (userStore.isLoggedIn) {
       profile = await getProfile();
     }
@@ -37,5 +36,5 @@
 {#if userStore.isLoggedIn}
   <p>{profile.message}</p>
 {:else}
-  <p>You must login to see this page</p>
+  <Alert message="You must be logged in to view this page" duration={null} type="static" />
 {/if}

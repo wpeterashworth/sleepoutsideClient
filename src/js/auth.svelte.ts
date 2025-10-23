@@ -1,5 +1,15 @@
 import * as utils from "./utils.mts";
+import Alert from "./alert.mts";
 const baseURL = import.meta.env.VITE_SERVER_URL;
+
+export function isProtectedRoute() {
+    const protectedRoutes = [
+        '/cart',
+        '/checkout',
+        '/profile'
+    ];
+    return protectedRoutes.some(route => window.location.pathname.startsWith(route));
+}
 
 interface UserStore {
     isLoggedIn:boolean,
@@ -19,16 +29,18 @@ export async function login(email:string, password:string) {
         body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
-
-    if(!res.ok) {
-        throw new Error(data.error.message);
+    if(res.status !== 200) {
+        throw new Error(data.message);
     }
+
     
     
-    utils.setLocalStorage('so-user', data.user);
+    utils.setLocalStorage('so-user', data);
     userStore.user = data.user;
     userStore.token = data.token;
     userStore.isLoggedIn = true;
+
+    return 'Welcome back, ' + data.user.name;
 }
 
 export function logout() {
@@ -36,7 +48,8 @@ export function logout() {
     userStore.token = "";
     userStore.isLoggedIn = false;
     utils.setLocalStorage('so-user', null);
-    window.location.reload();
+    new Alert({ message: 'You have been logged out.' }).show();
+    // window.location.reload();
 }
 
 export function checkAuth() {

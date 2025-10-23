@@ -1,8 +1,9 @@
 interface AlertOptions {
     message: string;
+    type?: 'info' | 'error' | 'success' | 'static';
     color?: string;
     backgroundColor?: string;
-    duration?: number | 0;
+    duration?: number | null;
     removeable?: boolean;
 }
 export default class Alert {
@@ -12,7 +13,6 @@ export default class Alert {
         const alerts = await response.json();
         alerts.forEach((alert: AlertOptions) => {
             const newAlert = new Alert(alert);
-            console.log(newAlert);
             newAlert.show();
         });
     }
@@ -20,12 +20,26 @@ export default class Alert {
     #ops: AlertOptions;
     static #queue: Alert[] = [];
     constructor(options: AlertOptions) {
+        options = { ...options };
         this.#el = document.createElement('div');
+        if (!options.type) options.type = 'info';
+        if (options.type === 'info') { options.color = 'var(--primary-color)'; options.backgroundColor = '#fffcfacc';}
+        if (options.type === 'error') { options.color = 'red'; options.backgroundColor = '#ffc9c9dc';}
+        if (options.type === 'success') { options.color = '#525b0f'; options.backgroundColor = '#c2f9b5';}
+        if (options.type === 'static') { options.color = 'gray'; options.backgroundColor = '#ffffffd0';}
+        
+        if (options.duration === undefined) options.duration = 1500;
         this.#ops = options;
         return this;
     }
     show() {
         Alert.#queue.push(this);
+        if (Alert.#queue.length == 2) { // if theres one alert in front of me
+            let current = Alert.#queue[Alert.#queue.length - 2];
+            // if that alert doesn't have a duration, remove it (thus showing mine)
+            if (!current.#ops.duration)
+                current.#el.remove();
+        }
         if (Alert.#queue.length == 1) {
             this.#show();
         }
@@ -64,9 +78,9 @@ export default class Alert {
                 }
             </style>
             <div style="
-                border: 2px solid ${this.#ops.color || 'green'};
+                border: 2px solid ${this.#ops.color};
                 color: ${this.#ops.color || 'green'};
-                background-color: ${this.#ops.backgroundColor || 'lightgreen'};
+                background-color: ${this.#ops.backgroundColor};
             " class="alert_mb_container">
                 <div style="position: relative;">
         `;
@@ -100,7 +114,7 @@ export default class Alert {
             this.#el.classList.add('showing');
         }, 100);
 
-        if (this.#ops.duration) {
+        if (!!this.#ops.duration) {
             setTimeout(removeMe.bind(this), this.#ops.duration);
         }
     }
