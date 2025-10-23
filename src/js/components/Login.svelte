@@ -1,11 +1,19 @@
 <script lang="ts">
-  let email = "";
-  let password = "";
+  import {login} from '../auth.svelte.ts';
+  let { callback = null } = $props();
+  let email = $state("");
+  let password = $state("");
 
-  function loginHandler(e?: Event) {
+  async function loginHandler(e?: Event) {
     e?.preventDefault();
     const hostDialog = (e?.target as HTMLElement | null)?.closest("dialog") as HTMLDialogElement | null;
+    let data = await login(email, password);
+    console.log(data);
     hostDialog?.close();
+
+    if (callback != null) {
+      callback();
+    }
   }
 </script>
 
@@ -16,7 +24,7 @@
   <label for="password">Password</label>
   <input type="password" id="password" bind:value={password} />
   
-  <button>Log In</button>
+  <button onclick={loginHandler}>Log In</button>
   <button type="button" class="link-style-button">Register</button>
 </form>
 
