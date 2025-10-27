@@ -3,10 +3,19 @@ import type { Product } from "./types.mts";
 import Header from './components/Header.svelte';
 import Footer from './components/Footer.svelte';
 import { mountSvelte } from './utils.mts';
+import UserMenu from "./components/UserMenu.svelte";
+import Cart from "./components/Cart.svelte";
 
 mountSvelte(Header, '#header');
 mountSvelte(Footer, '#footer');
 
+utils.mountSvelte(UserMenu, ".user-menu-container");
+utils.mountSvelte(Cart, ".cart-parent", 
+  {
+    cartItems: utils.getCartItems(),
+    removeItem: (product: Product) => utils.removeItemFromCart(product),
+    addItem: (product: Product) => utils.addItemToCart(product, false)
+  
 function renderCartContents() {
   const cartItems = utils.getCartItems();
   const htmlItems = cartItems.map((item: Product) => cartItemTemplate(item));
@@ -36,7 +45,6 @@ function cartItemTemplate(item: Product) {
 
 renderCartContents();
 
-
 document.addEventListener("click", (event) => {
   const target = event.target as HTMLElement | null;
   if (!target) return;
@@ -48,4 +56,4 @@ document.addEventListener("click", (event) => {
     utils.setLocalStorage("so-cart", updated);
     renderCartContents();
   }
-});
+);
