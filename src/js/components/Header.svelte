@@ -5,7 +5,7 @@ import UserMenu from "./UserMenu.svelte";
 
 <header class="divider">
     <div class="logo">
-    <img src="./images/noun_Tent_2517.svg" alt="tent logo" />
+    <img src="/images/noun_Tent_2517.svg" alt="tent logo" />
     <a href="/"> Sleep<span class="highlight">Outside</span></a>
     </div>
     <nav class="menu-right">
@@ -14,7 +14,7 @@ import UserMenu from "./UserMenu.svelte";
     </div>
     <div class="cart">
         <a
-        href="cart/index.html"
+        href="/cart/index.html"
         aria-label="Shopping Cart"
         title="Shopping Cart"
         >

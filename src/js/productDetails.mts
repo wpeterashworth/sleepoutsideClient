@@ -29,11 +29,37 @@ export async function productDetails(productId:string, selector:string) {
   });
 }
 
+function calculateDiscount(product:Product) {
+  if (product.listPrice > product.finalPrice) {
+    let discountPercent = ((product.listPrice - product.finalPrice) / product.listPrice) * 100
+    const roundedPercent = Math.round(discountPercent)
+    return roundedPercent
+  }
+  else {
+    return null
+  }
+}
+
 function productDetailsTemplate(product:Product) {
+  const hasDiscount = product.listPrice > product.finalPrice;
+  let pricingHTML = '';
+  if (hasDiscount) {
+    // Build HTML for discount
+    pricingHTML = `
+    <p class="original-price">Was: $${product.listPrice}</p>
+        <p class="current-price">Now: $${product.finalPrice}</p>
+        <span class="discount-badge">ON SALE!</span>
+      `;
+    } else {
+      // Build HTML for no discount scenario
+      pricingHTML = `
+        <p class="current-price">$${product.finalPrice}</p>
+      `;
+    }
   return `<h3 id="productName">${product.name}</h3>
     <h2 class="divider" id="productNameWithoutBrand">${product.nameWithoutBrand}</h2>
     <img id="productImage" class="divider" src="${product.images.primaryExtraLarge}" alt="${product.name}" />
-    <p class="product-card__price" id="productFinalPrice">$${product.finalPrice}</p>
+    <p>${pricingHTML}</p>
     <p class="product__color" id="productColorName">${product.colors.map( c => c.colorName ).join('/')}</p>
     <p class="product__description" id="productDescriptionHtmlSimple">${product.descriptionHtmlSimple}</p>
     <div class="product-detail__add">
