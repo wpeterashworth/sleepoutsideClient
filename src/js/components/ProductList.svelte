@@ -1,8 +1,9 @@
 <script lang="ts">
   import { getProducts } from "../productData.mts";
   import ProductSummary from "./ProductSummary.svelte";
+  import Breadcrumb from "./Breadcrumb.svelte";
   const { category } = $props();
-  
+
   async function loadProducts() {
     try {
       return await getProducts(`products?category=${category}`);
@@ -14,10 +15,11 @@
   let serverResponse = $state(loadProducts());
 </script>
 
-<h2>Top Products: {category}</h2>
 {#await serverResponse}
 <p>Loading...</p>
 {:then serverResponse}
+  <Breadcrumb category={category} count={serverResponse.results.length} />
+  <h2>Top Products: {category}</h2>
   <ul class="product-list">
     {#each serverResponse.results as product}
       <ProductSummary product={product} />

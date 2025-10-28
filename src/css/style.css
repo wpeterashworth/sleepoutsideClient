@@ -209,6 +209,39 @@ button {
 
 /* End cart icon styles */
 
+/* Breadcrumb navigation styles */
+.breadcrumb {
+  padding: 0.75em 1em;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid var(--light-grey);
+  font-size: var(--small-font);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.breadcrumb a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.breadcrumb .separator {
+  color: var(--dark-grey);
+  opacity: 0.5;
+}
+
+.breadcrumb .current {
+  color: var(--dark-grey);
+  font-weight: bold;
+}
+/* End breadcrumb navigation styles */
+
 .mission {
   padding: 0 0.5em;
   /* margin: 0.5em 0; */
