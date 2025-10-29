@@ -67,7 +67,7 @@ async function handleSubmit (){
             <legend>Order Summary</legend>
             <table><tbody>
                 <tr>
-                    <td>Item Subtotal ({itemTotal})</td>
+                    <td>Subtotal ({itemTotal})</td>
                     <td>${orderTotal.toFixed(2)}</td>
                 </tr>
                 <tr>

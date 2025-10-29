@@ -18,7 +18,7 @@ export async function productDetails(productId:string, selector:string) {
   }
 
   // mount breadcrumb
-  utils.mountSvelte(Breadcrumb, '.breadcrumb-container', { category: product.category });
+  utils.mountSvelte(Breadcrumb, '.breadcrumb-container', { category: product.category, count: 1 });
 
   // set the product html content
   utils.qs(selector)!.innerHTML = productDetailsTemplate(product);
