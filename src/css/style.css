@@ -209,6 +209,39 @@ button {
 
 /* End cart icon styles */
 
+/* Breadcrumb navigation styles */
+.breadcrumb {
+  padding: 0.75em 1em;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid var(--light-grey);
+  font-size: var(--small-font);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.breadcrumb a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.breadcrumb .separator {
+  color: var(--dark-grey);
+  opacity: 0.5;
+}
+
+.breadcrumb .current {
+  color: var(--dark-grey);
+  font-weight: bold;
+}
+/* End breadcrumb navigation styles */
+
 .mission {
   padding: 0 0.5em;
   /* margin: 0.5em 0; */
@@ -219,6 +252,54 @@ button {
 .products {
   padding: 0.5em;
 }
+
+/* Product list header with sorting */
+.product-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.product-list-header h2 {
+  margin: 0;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.sort-controls label {
+  font-size: var(--small-font);
+  color: var(--dark-grey);
+}
+
+.sort-controls select {
+  padding: 0.5em;
+  border: 1px solid var(--light-grey);
+  border-radius: 4px;
+  background-color: white;
+  color: var(--dark-grey);
+  font-size: var(--small-font);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.sort-controls select:hover {
+  border-color: var(--primary-color);
+}
+
+.sort-controls select:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 2px rgba(82, 91, 15, 0.1);
+}
+/* End product list header */
+
 .product-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

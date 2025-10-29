@@ -1,7 +1,9 @@
 import Alert from "./alert.mts"; //Alert.init();
 import * as utils from "./utils.mts";
 // @ts-ignore - Svelte component module declared in vite-env.d.ts
-import UserMenu from './components/UserMenu.svelte';
+import Header from './components/Header.svelte';
+import Footer from './components/Footer.svelte';
+import { mountSvelte } from './utils.mts';
 
-// get the element we want to put the component in
-utils.mountSvelte(UserMenu, ".user-menu-container");
+mountSvelte(Header, '#header');
+mountSvelte(Footer, '#footer');
