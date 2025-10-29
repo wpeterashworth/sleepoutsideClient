@@ -2,14 +2,17 @@
   const { item, removeItem, addItem } = $props();
 
   let quantity = $state(item.quantity);
+  let total = $state(item.finalPrice * item.quantity);
 
   function add() {
     quantity += 1;
+    total = item.finalPrice * quantity;
     item.quantity = quantity;
     addItem(item);
   }
   function subtract() {
     quantity -= 1;
+    total = item.finalPrice * quantity;
     item.quantity = quantity;
     removeItem(item);
   }
@@ -83,5 +86,5 @@ button {
       <button onclick={add}>+</button>
     </div>
   </div>
-  <p class="card__price">${item.finalPrice}</p>
+  <p class="card__price">${total.toFixed(2)}</p>
 </li>
