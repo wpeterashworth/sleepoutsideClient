@@ -1,5 +1,5 @@
 import * as utils from "./utils.mts";
-import { findProductById } from "./productData.mts";
+import { findProductById } from "./productService.mts";
 import type { Product } from "./types.mts";
 import Breadcrumb from "./components/Breadcrumb.svelte";
 
