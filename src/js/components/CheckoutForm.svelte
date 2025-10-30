@@ -1,5 +1,6 @@
 <script>
 import * as utils from "../utils.mts";
+import { submitOrder } from "../ordersService.mts";
 
 
 const calculateItemTotal = function () {
@@ -19,7 +20,7 @@ const calculateOrdertotal = function () {
     , 0);
 };
 const calculateTax = function () {
-    return orderTotal * 0.06;
+    return (orderTotal + shipping) * 0.06;
 };
 
 
@@ -32,35 +33,67 @@ let overallOrderTotal = orderTotal + tax + shipping;
 
 
 
-async function handleSubmit (){
+function _getVal(name) {
+    return document.querySelector(`input[name="${name}"]`).value
+}
+async function handleSubmit (e){
+    e.preventDefault();
+    const formEl = e.target;
 
+    if (formEl.checkValidity() === false) {
+        formEl.reportValidity();
+        return;
+    }
     
+    const order = {
+        createdOn: new Date().toISOString(),
+        userId: utils.getLocalStorage('so-user').user._id,
+        name: _getVal('fname') + ' ' + _getVal('lname'),
+        address: {
+            street: _getVal('street'),
+            city: _getVal('city'),
+            state: _getVal('state'),
+            zipCode: _getVal('zip'),
+            country: 'USA'
+        },
+        cardNumber: _getVal('cardNumber'),
+        cardExpiration: _getVal('expMonth') + '/' + _getVal('expYear'),
+        cardCode: _getVal('cvc'),
+        items: list.map(item => ({
+            productId: item._id,
+            price: item.finalPrice,
+            quantity: item.quantity
+        }))
+    };
+    console.log(order);
+
+    submitOrder(order);
 };
 </script>
 
-<form class="form">
+<form class="form" onsubmit={handleSubmit}>
     <div><fieldset class="shipping">
         <legend>Shipping</legend>
-        <label>First Name<input type="text" required></label>
-        <label>Last Name<input type="text" required></label>
-        <label>Street<input type="text" required></label>
-        <label>City<input type="text" required></label>
-        <label>State<input type="text" pattern="[A-Z]{2}" required></label> 
-        <label>Zip<input type="text" pattern="[1-9]{1,5}" placeholder="12345" required></label>
+        <label>First Name<input type="text" required name="fname"></label>
+        <label>Last Name<input type="text" required name="lname"></label>
+        <label>Street<input type="text" required name="street"></label>
+        <label>City<input type="text" required name="city"></label>
+        <label>State<input type="text" name="state" pattern="{'[A-Z]{2}'}" required></label> 
+        <label>Zip<input type="text" name="zip" pattern="{'[0-9]{5}'}" placeholder="12345" required></label>
     </fieldset></div>
 
     <div>
         <fieldset class="payment">
             <legend>Payment</legend>
-            <label>Card Number<input type="number" required></label>
+            <label>Card Number<input type="text" name="cardNumber" pattern="{'^([0-9]{16})$'}" required></label>
             <div style="display: flex; gap: 1rem">
                 <label for="expMonth">Expiration
                     <div style="display: flex; gap: 1rem">
                         <input type="text" id="expMonth" name="expMonth" pattern="{'^(0[1-9]|1[0-2])$'}" placeholder="MM" maxlength="2" required>
-                        <input type="text" id="expYear" name="expYear" pattern="{'^(2[0-9]{3})$'}" placeholder="YY" maxlength="4" required>
+                        <input type="text" id="expYear" name="expYear" pattern="{'^([2-9]{1}[5-9]{1})$'}" placeholder="YY" maxlength="4" required>
                     </div>
                 </label>
-                <label>CVC<input type="text" pattern="{'^([0-9]{3})$'}" required></label>
+                <label>CVC<input type="text" name="cvc" pattern="{'^([0-9]{3})$'}" required></label>
             </div>
         </fieldset>
         <fieldset class="checkout-summary">

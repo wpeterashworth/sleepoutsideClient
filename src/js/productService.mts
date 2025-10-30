@@ -1,21 +1,11 @@
+import * as utils from "./utils.mts";
 import type {Product} from "./types.mts"
-const baseURL = import.meta.env.VITE_SERVER_URL;
 
-function convertToJson(res:Response) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    if (res.status === 404)
-      throw new Error('Product not found');
-    else if (res.status === 500)
-      throw new Error('There\'s been a server error. Sorry! Please try again later.');
-    throw new Error(res.statusText);
-  }
-}
 
-export function getProducts(url:string) {
-  return fetch(baseURL + url)
-    .then(convertToJson);
+export async function getProducts(url:string) {
+  const {error, data} = await utils.getJSONData(url);
+  if(error) throw new Error(error);
+  return data;
 }
 
 export async function findProductById(id:string) {
