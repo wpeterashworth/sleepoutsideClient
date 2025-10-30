@@ -361,3 +361,18 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+.checkout-link {
+    border-radius: 7px;
+    border: outset;
+    background-color: #eee;
+    background-image: linear-gradient(#eee, #fff);
+    width: 50%;
+    font-weight: bold;
+    padding: 5px;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 30px;
+    max-width: 300px;
+}
+

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getProducts } from "../productData.mts";
+  import { getProducts } from "../productService.mts";
   import ProductSummary from "./ProductSummary.svelte";
   import Breadcrumb from "./Breadcrumb.svelte";
   import type { Product } from "../types.mts";

@@ -4,7 +4,6 @@ const baseURL = import.meta.env.VITE_SERVER_URL;
 
 export function isProtectedRoute() {
     const protectedRoutes = [
-        '/cart',
         '/checkout',
         '/profile'
     ];
@@ -23,16 +22,15 @@ interface UserStore {
 export const userStore = $state( {isLoggedIn: false, user: {}, token: ""}) as UserStore;
 
 export async function login(email:string, password:string) {
-    const res = await fetch(`${baseURL}users/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-    if(res.status !== 200) {
-        throw new Error(data.message);
+    const {error, data} = await utils.getJSONData(
+        'users/login',
+        'POST',
+        new Headers({ "Content-Type": "application/json" }),
+        { email, password }
+    );
+    if(error) {
+        throw new Error(error);
     }
-
     
     
     utils.setLocalStorage('so-user', data);

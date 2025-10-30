@@ -1,5 +1,5 @@
 import * as utils from "./utils.mts";
-import { findProductById } from "./productData.mts";
+import { findProductById } from "./productService.mts";
 import type { Product } from "./types.mts";
 import Breadcrumb from "./components/Breadcrumb.svelte";
 
@@ -18,7 +18,7 @@ export async function productDetails(productId:string, selector:string) {
   }
 
   // mount breadcrumb
-  utils.mountSvelte(Breadcrumb, '.breadcrumb-container', { category: product.category });
+  utils.mountSvelte(Breadcrumb, '.breadcrumb-container', { category: product.category, count: 1 });
 
   // set the product html content
   utils.qs(selector)!.innerHTML = productDetailsTemplate(product);
