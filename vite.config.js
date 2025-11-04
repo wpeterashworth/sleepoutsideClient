@@ -18,6 +18,7 @@ export default defineConfig({
         productList: resolve('src/product-list/index.html'),
         search: resolve('src/search/index.html'),
         profile: resolve('src/profile/index.html'),
+        wishlist: resolve('src/wishlist/index.html'),
       },
     },
   },

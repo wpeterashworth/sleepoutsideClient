@@ -31,6 +31,22 @@ export async function productDetails(productId:string, selector:string) {
       location.href = '/cart/';
     }, 600);
   });
+
+  // add listener to Wishlist button
+  utils.setClick('#addToWishlist', () => {
+    const button = utils.qs('#addToWishlist') as HTMLButtonElement;
+    if (utils.isInWishlist(product.id)) {
+      // Remove from wishlist
+      utils.removeItemFromWishlist(product);
+      button.classList.remove('in-wishlist');
+      button.textContent = '♡ Add to Wishlist';
+    } else {
+      // Add to wishlist
+      utils.addItemToWishlist(product);
+      button.classList.add('in-wishlist');
+      button.textContent = '♥ In Wishlist';
+    }
+  });
 }
 
 function calculateDiscount(product:Product) {
@@ -45,6 +61,7 @@ function calculateDiscount(product:Product) {
 }
 
 function productDetailsTemplate(product:Product) {
+  const isInWishlist = utils.isInWishlist(product.id);
   return `<h3 id="productName">${product.name}</h3>
     <h2 class="divider" id="productNameWithoutBrand">${product.nameWithoutBrand}</h2>
     <img id="productImage" class="divider"
@@ -57,5 +74,8 @@ function productDetailsTemplate(product:Product) {
     <p class="product__description" id="productDescriptionHtmlSimple">${product.descriptionHtmlSimple}</p>
     <div class="product-detail__add">
       <button id="addToCart">Add to Cart</button>
+      <button id="addToWishlist" class="${isInWishlist ? 'in-wishlist' : ''}">
+        ${isInWishlist ? '♥ In Wishlist' : '♡ Add to Wishlist'}
+      </button>
     </div>`;
 }

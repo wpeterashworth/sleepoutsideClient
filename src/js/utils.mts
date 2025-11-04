@@ -1,5 +1,6 @@
 import { Product } from "./types.mts";
 import { mount } from "svelte";
+import { userStore } from "./auth.svelte.ts";
 
 // wrapper for querySelector...returns matching element
 export const qs = (selector:string, parent = document) => parent.querySelector(selector);
@@ -143,4 +144,53 @@ export async function getJSONData(url:string, method:string = "GET", headers:Hea
     data = await res.json()
   }
   return {error, data};
+}
+
+// Wishlist functions
+function getWishlistKey() {
+  // If user is logged in, use user-specific wishlist key
+  if (userStore.isLoggedIn && userStore.user?._id) {
+    return `so-wishlist-${userStore.user._id}`;
+  }
+  // Otherwise use generic key for non-logged in users
+  return "so-wishlist";
+}
+
+export function addItemToWishlist(product: Product) {
+  const wishlistItems = getLocalStorage(getWishlistKey()) || [];
+
+  // Check if item already exists in wishlist
+  const existingItem = wishlistItems.find((item: Product) => item.id === product.id);
+  if (existingItem) {
+    // Item already in wishlist, don't add again
+    return false;
+  }
+
+  // Add item to wishlist (no quantity needed for wishlist)
+  wishlistItems.push(product);
+  setLocalStorage(getWishlistKey(), wishlistItems);
+  return true;
+}
+
+export function removeItemFromWishlist(product: Product) {
+  let wishlistItems = getLocalStorage(getWishlistKey()) || [];
+  wishlistItems = wishlistItems.filter((item: Product) => item.id !== product.id);
+  setLocalStorage(getWishlistKey(), wishlistItems);
+}
+
+export function getWishlistItems() {
+  const wishlistItems = getLocalStorage(getWishlistKey()) || [];
+  return wishlistItems;
+}
+
+export function isInWishlist(productId: string) {
+  const wishlistItems = getLocalStorage(getWishlistKey()) || [];
+  return wishlistItems.some((item: Product) => item.id === productId);
+}
+
+export function moveToCartFromWishlist(product: Product) {
+  // Add to cart
+  addItemToCart(product, true);
+  // Remove from wishlist
+  removeItemFromWishlist(product);
 }
