@@ -1,22 +1,36 @@
 <script lang="ts">
-  let email = "";
-  let password = "";
+  // @ts-ignore
+  import Alert from "../alert.mts";
+  import {login} from '../auth.svelte.ts';
+  let { callback = null } = $props();
+  let email = $state("");
+  let password = $state("");
 
-  function loginHandler(e?: Event) {
+  async function loginHandler(e?: Event) {
     e?.preventDefault();
     const hostDialog = (e?.target as HTMLElement | null)?.closest("dialog") as HTMLDialogElement | null;
-    hostDialog?.close();
+    try {
+      let data = await login(email, password);
+      new Alert({ message: data, type: 'success' }).show();
+
+      hostDialog?.close();
+      if (callback != null) {
+        callback();
+      }
+    } catch (error:any) {
+      new Alert({ message: error.message, type: 'error' }).show();
+    }
   }
 </script>
 
 <form onsubmit={loginHandler}>
   <label for="email">Email</label>
-  <input type="text" id="email" bind:value={email} />
+  <input type="email" id="email" bind:value={email} />
 
   <label for="password">Password</label>
   <input type="password" id="password" bind:value={password} />
   
-  <button>Log In</button>
+  <button onclick={loginHandler}>Log In</button>
   <button type="button" class="link-style-button">Register</button>
 </form>
 
