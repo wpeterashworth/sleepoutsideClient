@@ -9,7 +9,7 @@ export async function getProducts(url:string) {
 }
 
 export async function findProductById(id:string) {
-  const product = await getProducts('products/' + id) as Product;
+  const product = await getProducts('/products/' + id) as Product;
   console.log(product);
   return product;
 }

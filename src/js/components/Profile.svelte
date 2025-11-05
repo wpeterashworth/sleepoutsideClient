@@ -6,7 +6,7 @@
   let profile = $state("");
 
   async function getProfile() {
-    const res = await fetch(`${baseURL}users/protected`, {
+    const res = await fetch(`${baseURL}/users/protected`, {
       method: "GET",
       headers: {
         // This is how we pass our token to the server for protected routes.

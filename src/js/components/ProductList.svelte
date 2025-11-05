@@ -7,7 +7,7 @@
 
   async function loadProducts() {
     try {
-      return await getProducts(`products?category=${category}`);
+      return await getProducts(`/products?category=${category}`);
     } catch (error) {
       throw `<p>There was an error loading products.</p><p>Click <a href="/">here</a> to go back to the homepage.</p>`;
     }
