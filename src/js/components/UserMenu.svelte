@@ -2,6 +2,7 @@
   import { setClick } from "../utils.mts";
   import Dialog from './Dialog.svelte';
   import Login from './Login.svelte';
+  import ChangePassword from './ChangePassword.svelte';
   import { userStore, logout, checkAuth, isProtectedRoute } from "../auth.svelte.ts";
   checkAuth();
 
@@ -35,6 +36,7 @@
     </button>
     <nav class="user__menu">
       {#if userStore.isLoggedIn}
+        <Dialog label="Change Password"><ChangePassword /></Dialog>
         <a href="javscript:void(0)" onclick={logout}>Logout</a>
       {:else}
         <Dialog label="Login" required={isProtectedRoute()}><Login /></Dialog>
