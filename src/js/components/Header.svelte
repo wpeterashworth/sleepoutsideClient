@@ -2,6 +2,7 @@
 import * as utils from "../utils.mts";
 import Cart from "./Cart.svelte";
 import UserMenu from "./UserMenu.svelte";
+import RegisterCTA from "./RegisterCTA.svelte";
 
 let searchTerm = '';
 
@@ -14,6 +15,7 @@ let searchTerm = '';
   }
 </script>
 
+<RegisterCTA />
 <header class="divider">
     <div class="logo">
     <img src="/images/noun_Tent_2517.svg" alt="tent logo" />
