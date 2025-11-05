@@ -67,3 +67,20 @@ export function checkAuth() {
     // the double bang !! turns a variable into a boolean this will return a true or false.
     return !!userData;
 }
+
+export async function changePassword(currentPassword:string, newPassword:string) {
+    const headers = new Headers({
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${userStore.token}`
+    });
+    const { error, data } = await utils.getJSONData(
+        'users/change-password',
+        'POST',
+        headers,
+        { currentPassword, newPassword }
+    );
+    if (error) {
+        throw new Error(error);
+    }
+    return data?.message || 'Password updated successfully';
+}
