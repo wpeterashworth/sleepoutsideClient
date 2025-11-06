@@ -22,7 +22,7 @@
     }
 
     try {
-      const response = await getProducts(`products?q=${encodeURIComponent(searchTerm)}`);
+      const response = await getProducts(`/products?q=${encodeURIComponent(searchTerm)}`);
       totalCount = response.totalCount ?? response.results?.length ?? 0;
       products = response.results || response.data || [];
     } catch (err) {

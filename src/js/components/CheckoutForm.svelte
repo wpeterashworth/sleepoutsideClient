@@ -1,6 +1,7 @@
 <script>
 import * as utils from "../utils.mts";
 import { submitOrder } from "../ordersService.mts";
+import Alert from "../alert.mts";
 
 
 const calculateItemTotal = function () {
@@ -46,10 +47,11 @@ async function handleSubmit (e){
     }
     
     const order = {
-        createdOn: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        modifiedAt: new Date().toISOString(),
         userId: utils.getLocalStorage('so-user').user._id,
         name: _getVal('fname') + ' ' + _getVal('lname'),
-        address: {
+        shippingAddress: {
             street: _getVal('street'),
             city: _getVal('city'),
             state: _getVal('state'),
@@ -58,16 +60,23 @@ async function handleSubmit (e){
         },
         cardNumber: _getVal('cardNumber'),
         cardExpiration: _getVal('expMonth') + '/' + _getVal('expYear'),
-        cardCode: _getVal('cvc'),
-        items: list.map(item => ({
-            productId: item._id,
+        cardCode: parseInt(_getVal('cvc')),
+        orderItems: list.map(item => ({
+            productId: item.id,
             price: item.finalPrice,
             quantity: item.quantity
         }))
     };
     console.log(order);
 
-    submitOrder(order);
+    const result = await submitOrder(order);
+    if (result.error) {
+        new Alert({ message: result.error, type: 'error', duration: null }).show();
+    } else {
+        utils.clearCart();
+        location.href = 'success.html';
+    }
+    
 };
 </script>
 
