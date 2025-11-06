@@ -23,7 +23,7 @@ export const userStore = $state( {isLoggedIn: false, user: {}, token: ""}) as Us
 
 export async function login(email:string, password:string) {
     const {error, data} = await utils.getJSONData(
-        'users/login',
+        '/users/login',
         'POST',
         new Headers({ "Content-Type": "application/json" }),
         { email, password }
@@ -74,7 +74,7 @@ export async function changePassword(currentPassword:string, newPassword:string)
         "Authorization": `Bearer ${userStore.token}`
     });
     const { error, data } = await utils.getJSONData(
-        'users/change-password',
+        '/users/change-password',
         'POST',
         headers,
         { currentPassword, newPassword }

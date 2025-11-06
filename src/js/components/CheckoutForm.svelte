@@ -60,9 +60,9 @@ async function handleSubmit (e){
         },
         cardNumber: _getVal('cardNumber'),
         cardExpiration: _getVal('expMonth') + '/' + _getVal('expYear'),
-        cardCode: _getVal('cvc'),
+        cardCode: parseInt(_getVal('cvc')),
         orderItems: list.map(item => ({
-            productId: item._id,
+            productId: item.id,
             price: item.finalPrice,
             quantity: item.quantity
         }))
@@ -72,6 +72,9 @@ async function handleSubmit (e){
     const result = await submitOrder(order);
     if (result.error) {
         new Alert({ message: result.error, type: 'error', duration: null }).show();
+    } else {
+        utils.clearCart();
+        location.href = 'success.html';
     }
     
 };

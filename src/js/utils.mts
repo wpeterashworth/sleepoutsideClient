@@ -105,6 +105,9 @@ export function getCartItems() {
   const cartItems = getLocalStorage("so-cart") || [];
   return cartItems;
 }
+export function clearCart() {
+  setLocalStorage("so-cart", []);
+}
 
 export function mountSvelte(svelteComponent: any, targetSelector: string, props?: any) {
   const target = qs(targetSelector);
