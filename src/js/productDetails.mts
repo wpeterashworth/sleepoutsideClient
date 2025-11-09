@@ -2,6 +2,7 @@ import * as utils from "./utils.mts";
 import { findProductById } from "./productService.mts";
 import type { Product } from "./types.mts";
 import Breadcrumb from "./components/Breadcrumb.svelte";
+import RecommendedProducts from "./components/RecommendedProducts.svelte";
 
 export async function productDetails(productId:string, selector:string) {
   let product:Product;
@@ -22,6 +23,9 @@ export async function productDetails(productId:string, selector:string) {
 
   // set the product html content
   utils.qs(selector)!.innerHTML = productDetailsTemplate(product);
+
+  // mount recommended products
+  utils.mountSvelte(RecommendedProducts, '.recommended-products-container', { productId: productId });
 
   // add listener to Add to Cart button
   utils.setClick('#addToCart', () => {

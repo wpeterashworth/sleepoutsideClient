@@ -13,3 +13,9 @@ export async function findProductById(id:string) {
   console.log(product);
   return product;
 }
+
+export async function getRecommendedProducts(id:string) {
+  const response = await getProducts(`/products/${id}/recommended`);
+  // API might return { results: Product[] } or just Product[]
+  return Array.isArray(response) ? response : (response.results || response.data || []);
+}
